@@ -1,0 +1,7 @@
+# vi swap
+*.swp
+
+# media files
+*.mp4
+*.mkv
+*.avi
