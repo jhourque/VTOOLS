@@ -11,3 +11,6 @@ makemkv:
 		jlesage/makemkv
 	@sleep 5
 	@firefox http://127.0.0.1:5800
+
+clean:
+	@rm -rf IN OUT CONFIG
