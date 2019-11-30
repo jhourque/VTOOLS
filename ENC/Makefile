@@ -15,8 +15,10 @@ test_opt    := "-t 2"
 ffmpeg_opts := "-y -map 0:a? -c:a aac -b:a 128k -strict -2 -map 0:v -c:v libx265 -preset ${preset} -x265-params crf=${crf} -c:s copy"
 ffmpeg_opts2 := "-y -vf scale=4480:2240 -map 0:a? -c:a aac -b:a 128k -strict -2 -map 0:v -c:v libx265 -preset ${preset} -x265-params crf=${crf} -c:s copy"
 
+#### Rules ####
 config:
 	@mkdir -p IN OUT DONE
+
 fixname:
 	@rename "s/ /_/g" ${IN}/*
 	@rename "s/\!//g" ${IN}/*
@@ -25,6 +27,7 @@ fixname:
 	@rename "s/\)/_/g" ${IN}/*
 	@rename "s/\& */_/g" ${IN}/*
 	@rename "s/\+ */_/g" ${IN}/*
+	@rename "s/__/_/g" ${IN}/*
 	@ls ${IN}
 
 encode:
@@ -72,3 +75,7 @@ check_size:
 update_ffmpeg:
 	@docker rmi jrottenberg/ffmpeg:latest
 	@docker pull jrottenberg/ffmpeg
+
+x265_test:
+	@ffmpeg -loglevel warning -i ${IN}/test-1080p.mkv  -f yuv4mpegpipe - | ./x265  --y4m --crf 20 --preset medium - -o ${OUT}/test-1080p.hevc
+
