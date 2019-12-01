@@ -7,7 +7,7 @@ clone:
 
 build_multilib:
 	@cp -f ./multilib.sh x265/build/linux
-	@cd x265/build/linux; ./multilib.sh
+	@cd x265/build/linux; MAKEFLAGS=-j4 ./multilib.sh
 
 install:
 	@mkdir -p ../.bin

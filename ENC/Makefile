@@ -4,9 +4,10 @@ OUT  := ${PWD}/OUT
 DONE := ${PWD}/DONE
 
 # ffmpeg parameters
-file        ?= ""
-in_file     := $(notdir ${file})
-out_file    := $(basename ${in_file}).mp4
+file          ?= ""
+in_file       := $(notdir ${file})
+out_file      := $(basename ${in_file}).mp4
+out_file_hevc := $(basename ${in_file}).hevc
 
 crf         ?= 20
 preset      ?= veryfast
@@ -79,3 +80,13 @@ update_ffmpeg:
 x265_test:
 	@ffmpeg -loglevel warning -i ${IN}/test-1080p.mkv  -f yuv4mpegpipe - | ./x265  --y4m --crf 20 --preset medium - -o ${OUT}/test-1080p.hevc
 
+loop_hq_hevc:
+	@for i in ${IN}/*; \
+    do \
+        make -s encode_hq_hevc file=$${i}; \
+        mv $${i} ${DONE}; \
+    done
+
+encode_hq_hevc:
+	@echo "ffmpeg -loglevel warning -i ${IN}/${in_file} -f yuv4mpegpipe - | ./x265  --y4m --crf ${crf} -D 10 --preset ${preset} - -o ${OUT}/${out_file_hevc}"
+	@ffmpeg -loglevel warning -i ${IN}/${in_file} -f yuv4mpegpipe - | ./x265  --y4m --crf ${crf} -D 10 --preset ${preset} - -o ${OUT}/${out_file_hevc}

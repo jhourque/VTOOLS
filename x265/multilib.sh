@@ -13,7 +13,7 @@ make ${MAKEFLAGS}
 cd ../8bit
 ln -sf ../10bit/libx265.a libx265_main10.a
 ln -sf ../12bit/libx265.a libx265_main12.a
-cmake ../../../source -DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. -DLINKED_10BIT=ON -DLINKED_12BIT=ON -DSTATIC_LINK_CRT=ON -DNATIVE_BUILD=ON
+cmake ../../../source -DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. -DLINKED_10BIT=ON -DLINKED_12BIT=ON -DSTATIC_LINK_CRT=ON -DNATIVE_BUILD=ON -DENABLE_SHARED=OFF
 make ${MAKEFLAGS}
 
 # rename the 8bit library, then combine all three into libx265.a
