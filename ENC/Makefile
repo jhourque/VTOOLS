@@ -22,13 +22,14 @@ config:
 
 fixname:
 	@rename "s/ /_/g" ${IN}/*
+	@rename "s/'/_/g" ${IN}/*
 	@rename "s/\!//g" ${IN}/*
 	@rename "s/,/_/g" ${IN}/*
 	@rename "s/\(/_/g" ${IN}/*
 	@rename "s/\)/_/g" ${IN}/*
 	@rename "s/\& */_/g" ${IN}/*
 	@rename "s/\+ */_/g" ${IN}/*
-	@rename "s/__/_/g" ${IN}/*
+	@rename "s/_+/_/g" ${IN}/*
 	@ls ${IN}
 
 encode:
